@@ -23,7 +23,7 @@ class Solution:
         def countsmallequal(arr, x):
             return upper(arr, x)
         
-        low, high = float('-inf'), float('inf')
+        low, high = combined[0],combined[len(combined)-1]
         total_len = len(combined)
         req = (total_len + 1) // 2
         
