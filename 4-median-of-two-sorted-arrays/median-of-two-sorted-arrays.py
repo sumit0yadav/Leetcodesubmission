@@ -23,17 +23,17 @@ class Solution:
         def countsmallequal(arr, x):
             return upper(arr, x)
         
-        low, high = combined[0],combined[len(combined)-1]
+        # low, high = combined[0],combined[len(combined)-1]
         total_len = len(combined)
         req = (total_len + 1) // 2
         
-        while low <= high:
-            mid = (low + high) // 2
-            smallequal = countsmallequal(combined, mid)
-            if smallequal < req:
-                low = mid + 1
-            else:
-                high = mid - 1
+        # while low <= high:
+        #     mid = (low + high) // 2
+        #     smallequal = countsmallequal(combined, mid)
+        #     if smallequal < req:
+        #         low = mid + 1
+        #     else:
+        #         high = mid - 1
         
         # After binary search, 'low' is the correct median value
         if total_len % 2 == 0:
