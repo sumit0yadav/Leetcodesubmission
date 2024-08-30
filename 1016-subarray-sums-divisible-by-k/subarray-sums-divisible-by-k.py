@@ -3,7 +3,7 @@ class Solution:
 
         presum=0
         cnt=0
-        hm=defaultdict(int)
+        hm={}
         hm[0]=1
 
         for n in nums:
@@ -12,6 +12,9 @@ class Solution:
             rem=presum%k
             if rem in hm:
                 cnt+=hm[rem]
-            hm[rem]+=1
+            if rem in hm:
+                hm[rem]+=1
+            else:
+                hm[rem]=1
         return cnt
         
