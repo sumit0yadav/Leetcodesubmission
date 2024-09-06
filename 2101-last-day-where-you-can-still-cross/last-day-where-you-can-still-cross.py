@@ -26,11 +26,12 @@ class Solution:
             for i in range(col):
                 if grid[0][i]==0:
                     q.append([0,i])
-                    vis[0][i]=True
+                    # vis[0][i]=True
             # if day==1 or day ==2:print(q,day)
             while q:
                 r,c=q.popleft()
-                # vis[r][c]=True
+                if (vis[r][c]): continue
+                vis[r][c]=True
                 if r==row-1:
                     return True
                 for i in range(4):
@@ -38,7 +39,7 @@ class Solution:
                     y=c+dy[i]
                     if 0<=x<row and 0<=y<col and not vis[x][y]:
                         q.append([x,y])
-                        vis[x][y]=True
+                        # vis[x][y]=True
             return False
         ans=0
         l,r=1,len(cells)
