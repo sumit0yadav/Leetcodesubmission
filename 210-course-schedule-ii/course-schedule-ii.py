@@ -1,32 +1,33 @@
+from collections import deque
 class Solution:
-    def findOrder(self, n: int, prerequisites: List[List[int]]) -> List[int]:
+    def findOrder(self, n: int, prereq: List[List[int]]) -> List[int]:
+
+        ind={}
         
-    #     class Solution:
-    # def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
-        adj = [[] for _ in range(n)]
-        indegree = [0] * n
-        ans = []
-        res=0
-
-        for pair in prerequisites:
-            course = pair[0]
-            prerequisite = pair[1]
-            adj[prerequisite].append(course)
-            indegree[course] += 1
-
-        queue = deque()
+        adj={}
         for i in range(n):
-            if indegree[i] == 0:
-                queue.append(i)
+            adj[i]=[]
+            ind[i]=0
+        for course in prereq:
+            x,y=course[0],course[1]
+            adj[y].append(x)
+            ind[x]+=1
+        q=deque()
+        for i in range(n):
+            if ind[i]==0:
+                q.append(i)
+        ans=0
+        res=[]
+        while q:
+            curr=q.popleft()
+            ans+=1
+            res.append(curr)
 
-        while queue:
-            current = queue.popleft()
-            ans.append(current)
-            res+=1
-
-            for next_course in adj[current]:
-                indegree[next_course] -= 1
-                if indegree[next_course] == 0:
-                    queue.append(next_course)
-        if res!=n:return []
-        return ans
+            for nei in adj[curr]:
+                ind[nei]-=1
+                if ind[nei]==0:
+                    q.append(nei)
+        if n!=ans:return []
+        return res
+        
+        
