@@ -1,6 +1,9 @@
-SELECT r.contest_id,
-       ROUND(COUNT(DISTINCT r.user_id) * 100 / (SELECT COUNT(DISTINCT user_id) FROM Users), 2) AS percentage
-FROM Register r
-LEFT JOIN Users u ON u.user_id = r.user_id
-GROUP BY r.contest_id
-ORDER BY Percentage DESC, r.contest_id ASC;
+with cte as ( select count(*) as total from Users)
+
+select r.contest_id,
+round((count(distinct r.user_id)/c.total)*100,2) as percentage
+
+from Register r
+cross join cte c
+group by r.contest_id
+order by percentage desc,r.contest_id asc
