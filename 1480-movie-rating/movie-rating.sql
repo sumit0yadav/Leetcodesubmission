@@ -16,4 +16,3 @@ Group By m.movie_id
 
 Order by AVG(m.rating) desc, u.title
 LIMIT 1)
-
