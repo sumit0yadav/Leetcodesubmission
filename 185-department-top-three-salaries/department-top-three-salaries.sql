@@ -1,15 +1,16 @@
-WITH ed AS (SELECT 
+with cte as (select e.id,e.name,e.salary,e.departmentId,d.name as dept_name
+from Employee e left join Department d
+on e.departmentId=d.id),
+cte2 as(
 
-d.id as id,
-d.name as dep,
-e.name as name,
-e.salary as Salary,
-DENSE_RANK() OVER (PARTITION BY d.id ORDER BY salary DESC) as rnk
-
-FROM Employee e
-JOIN Department d
-ON e.departmentId = d.id
+select dept_name as Department, name as Employee, salary as Salary,
+DENSE_RANK() OVER (
+    PARTITION BY dept_name
+    ORDER BY salary desc
+) as rankk
+from cte
 )
-SELECT dep as Department, name as Employee, Salary
-FROM ed
-WHERE rnk<=3
+
+select a.Department,a.Employee,a.Salary
+from cte2 a
+where a.rankk<=3
