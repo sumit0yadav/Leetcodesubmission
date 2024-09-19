@@ -1,5 +1,5 @@
 # Write your MySQL query statement below
-SELECT user_id,
+select user_id,
 CONCAT(UPPER(LEFT(name,1)),LOWER(RIGHT(name,LENGTH(name)-1))) as name
-FROM Users
-ORDER BY user_id
+from Users
+order by user_id asc
