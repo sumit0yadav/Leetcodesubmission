@@ -1,22 +1,19 @@
 class Node:
+
     def __init__(self):
         self.links=[None]*26
-        self.flag=False
-    
-    def contains(self,ch):
-        return self.links[ord(ch)-ord('a')] is not None
-    
+        self.isend=False
+
     def put(self,ch,node):
         self.links[ord(ch)-ord('a')]=node
-    
+    def contains(self,ch):
+        return self.links[ord(ch)-ord('a')] is  not None
+
     def get(self,ch):
         return self.links[ord(ch)-ord('a')]
 
     def setend(self):
-        self.flag=True
-
-    def isend(self):
-        return self.flag
+        self.isend=True 
 
 
 class Trie:
@@ -28,11 +25,9 @@ class Trie:
     def insert(self, word: str) -> None:
         node=self.root
         for ch in word:
-            if not node.contains(ch):
-                node.put(ch,Node())
+            if not node.contains(ch):node.put(ch,Node())
             node=node.get(ch)
         node.setend()
-
         
 
     def search(self, word: str) -> bool:
@@ -40,12 +35,12 @@ class Trie:
         for ch in word:
             if not node.contains(ch):return False
             node=node.get(ch)
-        return node.isend()
+        return node.isend
         
 
-    def startsWith(self, word: str) -> bool:
+    def startsWith(self, prefix: str) -> bool:
         node=self.root
-        for ch in word:
+        for ch in prefix:
             if not node.contains(ch):return False
             node=node.get(ch)
         return True
