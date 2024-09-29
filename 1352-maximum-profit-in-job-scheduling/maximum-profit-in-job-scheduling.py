@@ -7,7 +7,7 @@ class Solution:
         emp = sorted(zip(st, et, profit))  # Sort by end time
         
         # Extract start times and end times for binary search
-        st = [job[0] for job in emp]
+        st.sort()
         
         # Memoization dictionary to store the result of subproblems
         dp = {}
