@@ -7,7 +7,7 @@ class Solution:
         emp = sorted(zip(st, et, profit))  # Sort by end time
         
         # Extract start times and end times for binary search
-        start_times = [job[0] for job in emp]
+        st = [job[0] for job in emp]
         
         # Memoization dictionary to store the result of subproblems
         dp = {}
@@ -28,7 +28,7 @@ class Solution:
             # Option 2: Take the current job
             curr_start, curr_end, curr_profit = emp[ind]
             # Use binary search to find the next non-conflicting job
-            next_job = bisect_left(start_times, curr_end)
+            next_job = bisect_left(st, curr_end)
             take = curr_profit + h(next_job)
             
             # Memoize the result
