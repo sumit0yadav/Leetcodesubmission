@@ -22,14 +22,15 @@ class Codec:
         q.append(node)
 
         while q:
-            
-            curr=q.popleft()
-            if curr:
-                l.append(str(curr.val))
-                q.append(curr.left)
-                q.append(curr.right)
-            else:
-                l.append('#')
+            size=len(q)
+            for _ in range(size):
+                curr=q.popleft()
+                if curr:
+                    l.append(str(curr.val))
+                    q.append(curr.left)
+                    q.append(curr.right)
+                else:
+                    l.append('#')
         print(l)
         return ','.join(l)
         
