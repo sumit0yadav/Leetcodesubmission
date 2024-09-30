@@ -1,68 +1,39 @@
-from collections import deque
-
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        if k==1:
+        if k == 1:
             return nums
-        if k>=len(nums):
+        if k >= len(nums):
             return [max(nums)]
-        # nums = [122,1,3,4,6,3,8,9,10,12,56]
 
+        stack = []  # Using stack instead of deque
+        ans = []
+        maxv = -1e9
+        maxind = -1
 
-        # k = 10
-        q=deque()
-        ans=[]
-        
-        maxv=-1e9
-        maxind=-1
-        # for i in range(k):
-            
-        #     if(i>maxind):
-        #         q.append((nums[i],i))
-        #     if maxv<nums[i]:
-               
-        #         q=deque()
-        #         maxv=nums[i]
-        #         maxind=i
-                
-        #         q.append((nums[i],i))
-      
-       
-        # ans.append(q[0][0])
         for i in range(len(nums)):
-        
-         
-            if i-maxind>=k:
-                
-                a,b=q.popleft()
-                maxv=q[0][0]
-                maxind=q[0][1]
 
-            if nums[i]>=maxv:
-                # if i==5:print('b')
-                
-                q=deque()
-                maxv=nums[i]
-                maxind=i
-                q.append((nums[i],i))
+            # Remove the elements which are out of this window
+            if i - maxind >= k:
+                stack.pop(0)  # Remove the first element since it's out of the window
+                maxv = stack[0][0]
+                maxind = stack[0][1]
+
+            if nums[i] >= maxv:
+                # Clear the stack when a new maximum is found
+                stack = []
+                maxv = nums[i]
+                maxind = i
+                stack.append((nums[i], i))
             else:
-               
-           
-                while q and nums[i]>=q[-1][0]:
-                    x,y=q.pop()
-                
-                if ( q and q[-1][0]>nums[i]):
-                    q.append((nums[i],i))
-                if not q:
-                    q.append((nums[i],i))
-                    maxv=nums[i]
-                    maxind=i
-            if i>=k-1:
-                ans.append(q[0][0])
-            # print(q,nums[i])
-        print(ans)
+                # Maintain the stack by popping smaller elements from the end
+                while stack and nums[i] >= stack[-1][0]:
+                    stack.pop()
+
+                # Add the current element to the stack
+                stack.append((nums[i], i))
+
+            # Once the window is full, start recording the maximums
+            if i >= k - 1:
+                ans.append(stack[0][0])
+
         return ans
-
-
-# print(stack,maxind)
-        
