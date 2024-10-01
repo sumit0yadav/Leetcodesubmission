@@ -12,7 +12,7 @@ class Solution:
                     ll.append(False)
                 grid.append(l)
                 vis.append(ll)
-            for i in range(mid):
+            for i in range(mid+1):
                 x,y=cells[i]
                 vis[x-1][y-1]=True
                 grid[x-1][y-1]=1
@@ -37,7 +37,7 @@ class Solution:
                         q.append((xx,yy))
             return False   
 
-        l,r=1,len(cells)
+        l,r=0,len(cells)-1
         ans=0
         while l<=r:
             mid=l+(r-l)//2
@@ -46,5 +46,5 @@ class Solution:
                 l=mid+1
             else:
                 r=mid-1
-        return ans
+        return ans+1
         
