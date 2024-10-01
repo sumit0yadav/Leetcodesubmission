@@ -3,7 +3,7 @@ class Solution:
     def cherryPickup(self, grid: List[List[int]]) -> int:
         n=len(grid)
         
-        # @lru_cache(None)
+        
         def h(grid,n,r1,c1,r2,c2,dp):
             if r1>=n or r2>=n or c1>=n or c2>=n or grid[r1][c1]==-1 or grid[r2][c2]==-1:
                 return -1e9
