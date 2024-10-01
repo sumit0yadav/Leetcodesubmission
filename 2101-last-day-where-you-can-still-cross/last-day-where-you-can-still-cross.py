@@ -1,13 +1,9 @@
-from collections import deque
 class Solution:
+    from collections import deque
     def latestDayToCross(self, row: int, col: int, cells: List[List[int]]) -> int:
-
-        def h(day):
+        def h(mid):
             grid=[]
-            dx=[0,1,0,-1]
-            dy=[-1,0,1,0]
             vis=[]
-
             for i in range(row):
                 l=[]
                 ll=[]
@@ -16,34 +12,33 @@ class Solution:
                     ll.append(False)
                 grid.append(l)
                 vis.append(ll)
-
-
-            for i in range(day):
-                r,c=cells[i]
-                grid[r-1][c-1]=1
-                vis[r-1][c-1]=True
+            for i in range(mid):
+                x,y=cells[i]
+                vis[x-1][y-1]=True
+                grid[x-1][y-1]=1
             q=deque()
             for i in range(col):
-                if grid[0][i]==0:
-                    q.append([0,i])
-                    # vis[0][i]=True
-            # if day==1 or day ==2:print(q,day)
+                if vis[0][i]==False:
+                    q.append((0,i))
+            dx=[-1,1,0,0]
+            dy=[0,0,1,-1]
             while q:
-                r,c=q.popleft()
-                if (vis[r][c]): continue
-                vis[r][c]=True
-                if r==row-1:
-                    return True
+                x,y=q.popleft()
+                if vis[x][y]:continue
+                
+                if x==row-1:return True
+                vis[x][y]=True
+                
+                
                 for i in range(4):
-                    x=r+dx[i]
-                    y=c+dy[i]
-                    if 0<=x<row and 0<=y<col and not vis[x][y]:
-                        q.append([x,y])
-                        # vis[x][y]=True
-            return False
-        ans=0
-        l,r=1,len(cells)
+                    xx=x+dx[i]
+                    yy=y+dy[i]
+                    if 0<=xx<row and 0<=yy<col and not vis[xx][yy]:
+                        q.append((xx,yy))
+            return False   
 
+        l,r=1,len(cells)
+        ans=0
         while l<=r:
             mid=l+(r-l)//2
             if h(mid):
@@ -51,11 +46,5 @@ class Solution:
                 l=mid+1
             else:
                 r=mid-1
-        # print(h(1))
-        # print(h(2))
         return ans
-
-
-
-                
         
