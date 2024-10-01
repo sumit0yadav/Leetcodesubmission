@@ -24,7 +24,7 @@ class Solution:
             dy=[0,0,1,-1]
             while q:
                 x,y=q.popleft()
-                if vis[x][y]:continue
+                # if vis[x][y]:continue
                 
                 if x==row-1:return True
                 vis[x][y]=True
@@ -35,6 +35,8 @@ class Solution:
                     yy=y+dy[i]
                     if 0<=xx<row and 0<=yy<col and not vis[xx][yy]:
                         q.append((xx,yy))
+                        vis[xx][yy]=True
+
             return False   
 
         l,r=0,len(cells)-1
