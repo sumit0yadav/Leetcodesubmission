@@ -1,22 +1,21 @@
+from collections import deque
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
-
-        def h(adj,vis,node):
+        size=len(graph)
+        colors=[0]*size
+        for i in range(size):
+            if colors[i]!=0:continue
             q=deque()
-            q.append(node)
-            vis[node]=0
-
+            q.append(i)
+            colors[i]=1
             while q:
-                node = q.popleft()
+                curr=q.popleft()
+                for next in graph[curr]:
+                    if colors[next]==0:
+                        colors[next]=-colors[curr]
+                        q.append(next)
+                    elif colors[next]==colors[curr]:
+                        return False
+        return True
 
-                for nei in adj[node]:
-                    if nei not in vis:
-                        vis[nei]=1-vis[node]
-                        q.append(nei)
-                    elif(vis[nei]==vis[node]):return False
-            return True
-        vis={}
-        for i in range(len(graph)):
-            if i not in vis:
-                if(h(graph,vis,i)==False):return False
-        return True   
+        
