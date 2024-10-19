@@ -1,21 +1,6 @@
-# Write your MySQL query statement below
-WITH CTE AS (select managerId,count(managerId) as count from Employee
-WHERE managerId is not NULL
-GROUP BY managerId
-having count(managerId)>4)
-
-select e.name as name
-FROM CTE c
-JOIN Employee e
-ON c.managerId=e.id
--- WHERE e.name is not NULL
--- WITH CTE AS (
---     SELECT managerId, COUNT(managerId) AS count 
---     FROM Employee
---     WHERE managerId IS NOT NULL
---     GROUP BY managerId
---     HAVING COUNT(managerId) > 4
--- )
--- SELECT e.name AS name
--- FROM CTE c
--- JOIN Employee e ON c.managerId = e.id;
+select e.name as name from Employee e
+RIGHT JOIN Employee e1
+ON e.id=e1.managerId
+WHERE e.id is not null
+group by e.id
+having count(e.id)>4
