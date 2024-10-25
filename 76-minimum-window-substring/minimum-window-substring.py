@@ -1,34 +1,43 @@
+from collections import Counter,defaultdict
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        from collections import Counter
-        if not s or not t or len(t)>len(s):
-            return ''
+        if s==t:return s
+        if not s or not t or len(s)<len(t):
+            return ""
         req_freq=Counter(t)
-        window_freq={}
+        window_freq=defaultdict(int)
 
-        min_length=1e9
-        min_window=''
-        req_char=len(req_freq)
-        formed=0
+        reqlen=len(req_freq)
+        currlen=0
+        windowlen=0
+        window=""
+        minilen=1e9
+        minians=""
         l,r=0,0
+
         while r<len(s):
             char=s[r]
+            window_freq[char]+=1
+            if req_freq[char]==window_freq[char]:
+                currlen+=1
+            
+            # print(window_freq)
+            while l<=r and currlen==reqlen:
 
-            window_freq[char]=window_freq.get(char,0)+1
-            if char in req_freq and window_freq[char]==req_freq[char]:
-                formed+=1
-            while l<=r and formed==req_char:
+                if minilen>(r-l+1):
+                    minilen=r-l+1
+                    minians=s[l:r+1]
                 char=s[l]
-                windowsize=r-l+1
-                if min_length>windowsize:
-                    min_length=windowsize
-                    min_window=s[l:r+1]
                 window_freq[char]-=1
-                if char in req_freq and window_freq[char]<req_freq[char]:
-                    formed-=1
-                l=l+1
+                if char in req_freq and req_freq[char]>window_freq[char]:
+                    currlen-=1
+                l+=1
+
             r+=1
-        return min_window if min_length != float("inf") else ""
+        return minians
 
 
+
+
+        
         
